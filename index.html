@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subtitle Viewer</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="vendor/bootstrap-icons-1.13.1/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/constants.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/toast.js" defer></script>
+  </head>
+  <body class="dark-theme">
+    <div class="app container">
+      <header>
+        <h1>Subtitle Viewer</h1>
+        <p>View .SRT or .VTT files as plain text instantly in your browser.</p>
+      </header>
+
+      <label class="drop-zone" id="dropZone">
+        <strong>Drop your subtitle file here</strong>
+        <span>Supports .srt and .vtt</span>
+        <span class="button">Browse File</span>
+        <input type="file" accept=".srt,.vtt" hidden onchange="openFile(event.target.files[0])" />
+      </label>
+
+      <div class="preview">
+        <div class="preview-header">
+          <div class="title truncated">Converted Text</div>
+          <div class="actions">
+            <button class="menu-btn" onclick="toggleMenuModal()">
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+        </div>
+        <div class="output-text">
+          <div class="placeholder">Your converted text will appear here...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu modal -->
+    <div class="menu-modal list-modal modal hidden" onclick="toggleMenuModal()">
+      <div class="modal-content" onclick="stopPropagation(event)">
+        <div class="items">
+          <label class="file-input">
+            <i class="bi bi-file-earmark-arrow-up"></i>
+            Browse file
+            <input type="file" accept=".srt,.vtt" hidden onchange="openFile(event.target.files[0])" />
+          </label>
+          <label class="cover">
+            <i class="bi bi-image"></i>
+            Cover
+            <input type="file" accept="image/*" hidden oninput="changeCover(event.target.files[0])" />
+          </label>
+          <div class="history" onclick="toggleHistoryModal()">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            History
+          </div>
+          <div class="copy" onclick="copyToCB()">
+            <i class="bi bi-clipboard"></i>
+            Copy text
+          </div>
+          <div class="download" onclick="downloadText()">
+            <i class="bi bi-download"></i>
+            Download
+          </div>
+          <div class="fullscreen" onclick="toggleFullscreen()">
+            <i class="bi bi-fullscreen"></i>
+            Fullscreen
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-bar container" onclick="stopPropagation(event)">
+        <input type="range" min="0" value="0" />
+        <div class="time-display">--:-- / --:--</div>
+      </div>
+    </div>
+
+    <!-- History modal -->
+    <div class="history-modal list-modal modal hidden" onclick="toggleHistoryModal()">
+      <div class="modal-content" onclick="stopPropagation(event)">
+        <div class="items"></div>
+      </div>
+    </div>
+
+    <div class="toast container"></div>
+  </body>
+</html>
